@@ -1,5 +1,5 @@
 {
-  "name": "google_codelab_components",
+  "name": "codelab-components",
   "version": "0.0.1",
   "private": true,
   "main": "google-codelab-elements.html",

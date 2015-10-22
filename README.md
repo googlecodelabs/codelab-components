@@ -10,9 +10,9 @@ To play with the demos, an easy thing would be to use
 [polyserve](https://github.com/PolymerLabs/polyserve):
 `npm install -g polyserve`.
 
-Fire up the server with `polyserve` command and point your browser to
+Fire up the server with `polyserve` command and point your browser to:
 
-    http://localhost:8080/components/codelab_components/demo/<demo-file>
+    http://localhost:8080/components/codelab_components/
 
 Use [web-component-tester](https://github.com/Polymer/web-component-tester) to run tests.
 Can be installed with `npm install -g web-component-tester`, or just fire up `polyserve`

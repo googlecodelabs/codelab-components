@@ -429,10 +429,13 @@ Example:
             break;
           }
         }
-        if (!index) {
-          index = '/';
+
+        var returnToIndex = index ? decodeURIComponent(index) : index;
+        if (!returnToIndex || returnToIndex.slice(-6) === '/index') {
+          returnToIndex = '/';
         }
-        window.location.href = decodeURIComponent(index);
+
+        window.location.href = returnToIndex;
       },
 
       _tocItemClass: function(selected, i) {

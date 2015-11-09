@@ -1,6 +1,6 @@
 {
   "name": "codelab-components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "main": "google-codelab-elements.html",
   "license": "Apache2",

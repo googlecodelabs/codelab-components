@@ -65,7 +65,7 @@ Example:
         on-iron-localstorage-load="_stateLoaded">
     </iron-localstorage>
 
-    <paper-drawer-panel narrow="{{narrow}}" selected="{{currDrawer}}" id="drawer">
+    <paper-drawer-panel narrow="{{_narrow}}" selected="{{currDrawer}}" id="drawer">
 
       <div drawer>
         <paper-menu id="toc" selected="{{selected}}"
@@ -88,10 +88,10 @@ Example:
 
       <paper-scroll-header-panel id="headerpanel" fixed main>
         <paper-toolbar>
-          <template is="dom-if" if="{{narrow}}">
+          <template is="dom-if" if="{{_narrow}}">
             <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           </template>
-          <template is="dom-if" if="{{!narrow}}">
+          <template is="dom-if" if="{{!_narrow}}">
             <paper-icon-button icon="arrow-back" on-tap="_goToHome"></paper-icon-button>
           </template>
           <h1 class="title">{{title}}</h1>
@@ -115,14 +115,14 @@ Example:
             </paper-fab>
 
             <div>
-              <template is="dom-if" if="{{_hideDoneFab(selected)}}">
+              <template is="dom-if" if="{{_showNextFab(selected, steps)}}">
                 <paper-fab icon="chevron-right" raised class="navbutton nextbutton"
                   title="{{_nextFabTitle(selected)}}"
                   on-tap="selectNext">
                 </paper-fab>
               </template>
 
-              <template is="dom-if" if="{{!_hideDoneFab(selected)}}">
+              <template is="dom-if" if="{{_showDoneFab(selected, steps)}}">
                 <paper-fab icon="done" raised class="navbutton donebutton"
                   on-tap="_goToHome" title="Complete codelab">
                 </paper-fab>
@@ -459,13 +459,14 @@ Example:
       },
 
       _isLastStep: function(stepIndex) {
-        if (isNaN(stepIndex) || !this.$.pages.items) {
-          return true;
-        }
-        return !this.$.pages.items.length || stepIndex >= this.$.pages.items.length - 1;
+        return !this.steps.length || stepIndex >= this.steps.length - 1;
       },
 
-      _hideDoneFab: function(stepIndex) {
+      _showDoneFab: function(stepIndex, steps) {
+        return this._isLastStep(stepIndex);
+      },
+
+      _showNextFab: function(stepIndex, steps) {
         return !this._isLastStep(stepIndex);
       },
 

@@ -94,29 +94,32 @@ the License.
         var events = collectEvents(window);
         var codelab = fixture('codelab');
 
-        assert.equal(codelab.selected, 0);
-        assert.equal(codelab.duration, 5);
-        assert.equal(codelab.remaining, '5 min remaining');
-        assert.equal(codelab.feedbackLink, 'http://codelab.example.org');
-        assert.equal(codelab.steps[0].step, 1);
-        assert.equal(codelab.steps[1].step, 2);
+        codelab.addEventListener('google-codelab-ready', function(e) {
+          assert.equal(codelab.selected, 0);
+          assert.equal(codelab.duration, 5);
+          assert.equal(codelab.remaining, '5 min remaining');
+          assert.equal(codelab.feedbackLink, 'http://codelab.example.org');
+          assert.equal(codelab.steps[0].step, 1);
+          assert.equal(codelab.steps[1].step, 2);
 
-        assert.equal(codelab.querySelector('h1').textContent, 'Test title');
+          assert.equal(codelab.querySelector('h1').textContent, 'Test title');
 
-        // TOC dom-repeat needs another microtask to render
-        async.nextTick(function() {
-          assert(codelab.querySelector('.prevbutton').disabled, 'prev fab is not disabled');
-          assert(!codelab.querySelector('.prevbutton').hidden, 'prev fab is hidden');
-          assert(!codelab.querySelector('.nextbutton').disabled, 'next fab is disabled');
-          assert(!codelab.querySelector('.nextbutton').hidden, 'next fab is hidden');
-          assert.isNull(codelab.querySelector('.donebutton'), 'done fab is not generated');
+          // TOC dom-repeat needs another microtask to render
+          async.nextTick(function() {
+            assert(codelab.querySelector('.prevbutton').disabled, 'prev fab is not disabled');
+            assert(!codelab.querySelector('.prevbutton').hidden, 'prev fab is hidden');
+            assert(!codelab.querySelector('.nextbutton').disabled, 'next fab is disabled');
+            assert(!codelab.querySelector('.nextbutton').hidden, 'next fab is hidden');
+            assert.isNull(codelab.querySelector('.donebutton'), 'done fab is not generated');
 
-          var items = codelab.$.toc.items;
-          assert.equal(codelab.$.toc.selected, 0);
-          assert.equal(items.length, 2);
-          assert.match(items[0].textContent.trim(), /1\s*First/);
-          assert.match(items[1].textContent.trim(), /2\s*Second/);
-          events.verify(done, 'google-codelab-step-0');
+            var items = codelab.$.toc.items;
+            assert.equal(codelab.$.toc.selected, 0);
+            assert.equal(items.length, 2);
+            assert.match(items[0].textContent.trim(), /1\s*First/);
+            assert.match(items[1].textContent.trim(), /2\s*Second/);
+            events.verify(done, 'google-codelab-step-0');
+          });
+
         });
       });
 
@@ -175,26 +178,29 @@ the License.
           });
         });
 
-      });  // text step suite
+      });  // test step suite
 
       test('prev step', function(done) {
         var events = collectEvents(window);
         var codelab = fixture('codelab');
-        codelab.select(1);
-        MockInteractions.tap(codelab.querySelector('.prevbutton'));
-        // allow $.toc to render the items
-        async.nextTick(function() {
-          assert.equal(codelab.selected, 0, 'selected');
-          assert.equal(codelab.remaining, '5 min remaining', 'remaining');
-          assert.match(codelab.$.countdown.textContent.trim(), /5 min/);
-          assert.equal(codelab.$.toc.selected, 0, '$.toc.selected');
-          assert(location.hash === '#0' || location.hash === '', 'location.hash');
-          assert(codelab.querySelector('.prevbutton').disabled, 'prev fab is not disabled');
-          events.verify(done,
-              'google-codelab-step-0',
-              'google-codelab-step-1',
-              'google-codelab-complete',
-              'google-codelab-step-0');
+
+        codelab.addEventListener('google-codelab-ready', function(e) {
+          codelab.select(1);
+          MockInteractions.tap(codelab.querySelector('.prevbutton'));
+          // allow $.toc to render the items
+          async.nextTick(function() {
+            assert.equal(codelab.selected, 0, 'selected');
+            assert.equal(codelab.remaining, '5 min remaining', 'remaining');
+            assert.match(codelab.$.countdown.textContent.trim(), /5 min/);
+            assert.equal(codelab.$.toc.selected, 0, '$.toc.selected');
+            assert(location.hash === '#0' || location.hash === '', 'location.hash');
+            assert(codelab.querySelector('.prevbutton').disabled, 'prev fab is not disabled');
+            events.verify(done,
+                'google-codelab-step-0',
+                'google-codelab-step-1',
+                'google-codelab-complete',
+                'google-codelab-step-0');
+          });
         });
       });
 
@@ -202,68 +208,77 @@ the License.
         // resume dialog is shown after about 500ms,
         // so each test needs to wait to verify.
 
-        test('first visit', function(done) {
+        test('first visit', function() {
           var codelab = fixture('codelab');
-          setTimeout(function() {
-            assert(!codelab.$.resumeDialog.opened, 'is opened');
-            done();
-          }, 510);
+          assert(!codelab.$.resumeDialog.opened, 'is opened');
         });
 
         test('second visit', function(done) {
           ls.setItem(LS_KEY, '{"stepIndex": 1}');
           var codelab = fixture('codelab');
-          var dialog = codelab.$.resumeDialog;
-          codelab.querySelector('iron-localstorage').reload();
-          setTimeout(function() {
-            assert.equal(codelab.selected, 0);
-            assert.match(dialog.textContent.trim(), /Step 2: Second/);
-            assert(dialog.opened, 'is closed');
-            done();
-          }, 510);
+
+          codelab.addEventListener('google-codelab-ready', function(e) {
+            var dialog = codelab.$.resumeDialog;
+            codelab.querySelector('iron-localstorage').reload();
+            setTimeout(function() {
+              assert.equal(codelab.selected, 0);
+              assert.match(dialog.textContent.trim(), /Step 2: Second/);
+              assert(dialog.opened, 'is closed');
+              done();
+            }, 510);
+          });
         });
 
         test('second visit, same step', function(done) {
           ls.setItem(LS_KEY, '{"stepIndex": 1}');
           location.hash = '1';
           var codelab = fixture('codelab');
-          var dialog = codelab.$.resumeDialog;
-          codelab.querySelector('iron-localstorage').reload();
-          setTimeout(function() {
-            assert.equal(codelab.selected, 1, 'selected');
-            assert(!dialog.opened, 'is opened');
-            done();
-          }, 510);
+
+          codelab.addEventListener('google-codelab-ready', function(e) {
+            var dialog = codelab.$.resumeDialog;
+            codelab.querySelector('iron-localstorage').reload();
+            // setTimeout(function() {
+              assert.equal(codelab.selected, 1, 'selected');
+              assert(!dialog.opened, 'is opened');
+              done();
+            // }, 510);
+          });
         });
 
         test('resume', function(done) {
           ls.setItem(LS_KEY, '{"stepIndex": 1}');
           var events = collectEvents(window);
           var codelab = fixture('codelab');
-          var dialog = codelab.$.resumeDialog;
-          codelab.querySelector('iron-localstorage').reload();
-          setTimeout(function() {
-            MockInteractions.tap(dialog.querySelector('[dialog-confirm]'));
-            async.nextTick(function() {
-              verifySecondSelected(codelab);
-              assert(!dialog.opened, 'is opened');
-              events.verify(done, 'google-codelab-step-0', 'google-codelab-step-1');
-            });
-          }, 510);
+
+          codelab.addEventListener('google-codelab-ready', function(e) {
+            var dialog = codelab.$.resumeDialog;
+            codelab.querySelector('iron-localstorage').reload();
+            // setTimeout(function() {
+              MockInteractions.tap(dialog.querySelector('[dialog-confirm]'));
+              async.nextTick(function() {
+                verifySecondSelected(codelab);
+                assert(!dialog.opened, 'is opened');
+                events.verify(done, 'google-codelab-step-0', 'google-codelab-step-1');
+              });
+            // }, 510);
+          });
         });
 
         test('cancel', function(done) {
           ls.setItem(LS_KEY, '{"stepIndex": 1}');
           var events = collectEvents(window);
           var codelab = fixture('codelab');
-          var dialog = codelab.$.resumeDialog;
-          codelab.querySelector('iron-localstorage').reload();
-          setTimeout(function() {
-            MockInteractions.tap(dialog.querySelector('[dialog-dismiss]'));
-            assert.equal(codelab.selected, 0, 'selected');
-            assert(!dialog.opened, 'is opened');
-            events.verify(done, 'google-codelab-step-0');
-          }, 510);
+
+          codelab.addEventListener('google-codelab-ready', function(e) {
+            var dialog = codelab.$.resumeDialog;
+            codelab.querySelector('iron-localstorage').reload();
+            // setTimeout(function() {
+              MockInteractions.tap(dialog.querySelector('[dialog-dismiss]'));
+              assert.equal(codelab.selected, 0, 'selected');
+              assert(!dialog.opened, 'is opened');
+              events.verify(done, 'google-codelab-step-0');
+            // }, 510);
+          });
         });
 
       });  // resume dialog suite

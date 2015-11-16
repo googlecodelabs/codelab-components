@@ -56,7 +56,7 @@ Example:
 @demo demo/codelab.html
 -->
 <dom-module id="google-codelab">
-  <template>
+  <template strip-whitespace>
     <style include="shared-style"></style>
     <style include="codelab-style"></style>
 
@@ -70,14 +70,14 @@ Example:
       <div drawer>
         <paper-menu id="toc" selected="{{selected}}"
                     on-iron-select="_allowCodelabComplete">
-          <template is="dom-repeat" items="{{steps}}">
+          <template is="dom-repeat" items="{{steps}}" strip-whitespace>
             <paper-item class$="{{_tocItemClass(selected, index)}}">
               <i>{{item.step}}</i><span>{{item.label}}</span>
             </paper-item>
           </template>
         </paper-menu>
 
-        <template is="dom-if" if="{{feedbackLink}}">
+        <template is="dom-if" if="{{feedbackLink}}" strip-whitespace>
           <div id="feedback">
             Did you find a mistake?
             <a target="_blank" href$="{{feedbackLink}}">Please file a bug</a>.
@@ -88,10 +88,10 @@ Example:
 
       <paper-scroll-header-panel id="headerpanel" fixed main>
         <paper-toolbar>
-          <template is="dom-if" if="{{_narrow}}">
+          <template is="dom-if" if="{{_narrow}}" strip-whitespace>
             <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           </template>
-          <template is="dom-if" if="{{!_narrow}}">
+          <template is="dom-if" if="{{!_narrow}}" strip-whitespace>
             <paper-icon-button icon="arrow-back" on-tap="_goToHome"></paper-icon-button>
           </template>
           <h1 class="title">{{title}}</h1>
@@ -102,7 +102,8 @@ Example:
         </paper-toolbar>
 
         <neon-animated-pages id="pages" selected="{{selected}}"
-            on-iron-deselect="_onStepLeave">
+            on-iron-deselect="_onStepLeave"
+            on-iron-items-changed="_onStepsChanged">
           <content select="google-codelab-step"></content>
         </neon-animated-pages>
 
@@ -115,14 +116,14 @@ Example:
             </paper-fab>
 
             <div>
-              <template is="dom-if" if="{{_showNextFab(selected, steps)}}">
+              <template is="dom-if" if="{{_showNextFab(selected, steps)}}" strip-whitespace>
                 <paper-fab icon="chevron-right" raised class="navbutton nextbutton"
                   title="{{_nextFabTitle(selected)}}"
                   on-tap="selectNext">
                 </paper-fab>
               </template>
 
-              <template is="dom-if" if="{{_showDoneFab(selected, steps)}}">
+              <template is="dom-if" if="{{_showDoneFab(selected, steps)}}" strip-whitespace>
                 <paper-fab icon="done" raised class="navbutton donebutton"
                   on-tap="_goToHome" title="Complete codelab">
                 </paper-fab>
@@ -148,6 +149,11 @@ Example:
   <script>
     Polymer({
       is: 'google-codelab',
+
+      /**
+       * Fired when the codelab steps have been fully initialized.
+       * @event google-codelab-ready
+       */
 
       /**
        * Fired when user advances a codelab step or goes backwards.
@@ -298,7 +304,7 @@ Example:
         this._updateStepIndexFromUrl();
       },
 
-      attached: function() {
+      _onStepsChanged: function() {
         var duration = 0;
         var steps = this.$.pages.items.map(function(item, i) {
           duration += item.duration;
@@ -308,6 +314,7 @@ Example:
         this._setSteps(steps);
         this._setDuration(duration);
         this._updateRemaining();
+        this.fire('google-codelab-ready', {steps: this.steps});
       },
 
       /**
@@ -459,6 +466,9 @@ Example:
       },
 
       _isLastStep: function(stepIndex) {
+        if (!this.steps.length) {
+          return false;
+        }
         return !this.steps.length || stepIndex >= this.steps.length - 1;
       },
 

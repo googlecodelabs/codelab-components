@@ -469,7 +469,7 @@ Example:
         if (!this.steps.length) {
           return false;
         }
-        return !this.steps.length || stepIndex >= this.steps.length - 1;
+        return stepIndex >= this.steps.length - 1;
       },
 
       _showDoneFab: function(stepIndex, steps) {

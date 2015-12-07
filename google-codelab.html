@@ -84,6 +84,12 @@ Example:
           </div>
         </template>
 
+        <template is="dom-if" if="{{lastUpdated}}" strip-whitespace>
+          <div id="last-updated">
+            Last updated on <span>{{lastUpdated}}</span>
+          </div>
+        </template>
+
       </div>
 
       <paper-scroll-header-panel id="headerpanel" fixed main>

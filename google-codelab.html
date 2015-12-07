@@ -427,6 +427,7 @@ Example:
       },
 
       _goToHome: function () {
+        // extract 'index' search param
         var index;
         var parts = location.search.substring(1).split('&');
         for (var i = 0; i < parts.length; i++) {
@@ -436,13 +437,15 @@ Example:
             break;
           }
         }
-
-        var returnToIndex = index ? decodeURIComponent(index) : index;
-        if (!returnToIndex || returnToIndex.slice(-6) === '/index') {
-          returnToIndex = '/';
+        // decode and extract index name from the search param
+        // default index is 'index'
+        index = index ? decodeURIComponent(index) : '';
+        index = index.replace(/[^a-z0-9\-]+/ig, '');
+        if (index === 'index') {
+          index = '';
         }
-
-        window.location.href = returnToIndex;
+        // navigate away to the index page
+        window.location.href = '/' + index;
       },
 
       _tocItemClass: function(selected, i) {

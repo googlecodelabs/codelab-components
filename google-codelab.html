@@ -84,6 +84,12 @@ Example:
           </div>
         </template>
 
+        <template is="dom-if" if="{{lastUpdated}}" strip-whitespace>
+          <div id="last-updated">
+            Last updated on {{lastUpdated}}.
+          </div>
+        </template>
+
       </div>
 
       <paper-scroll-header-panel id="headerpanel" fixed main>
@@ -229,6 +235,14 @@ Example:
           type: String,
           value: '',
           readOnly: true
+        },
+
+        /**
+         * Last date the codelab was updated, in YYYY-MM-DD format.
+         */
+        lastUpdated: {
+          type: String,
+          value: ''
         },
 
         /**

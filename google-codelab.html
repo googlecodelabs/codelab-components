@@ -86,7 +86,7 @@ Example:
 
         <template is="dom-if" if="{{lastUpdated}}" strip-whitespace>
           <div id="last-updated">
-            Last updated on <span>{{lastUpdated}}</span>
+            Last updated on {{lastUpdated}}.
           </div>
         </template>
 
@@ -232,6 +232,15 @@ Example:
          * UI string for remaining tie to completion. Example: "5 min remaining".
          */
         remaining: {
+          type: String,
+          value: '',
+          readOnly: true
+        },
+
+        /**
+         * Last date the codelab was updated, in YYYY-MM-DD format.
+         */
+        lastUpdated: {
           type: String,
           value: '',
           readOnly: true

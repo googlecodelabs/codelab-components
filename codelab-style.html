@@ -17,7 +17,7 @@ the License.
 <link rel="import" href="../paper-styles/color.html">
 
 <dom-module id="codelab-style">
-  <template>
+  <template strip-whitespace>
     <style>
 
 :root {
@@ -119,6 +119,8 @@ h1 {
 }
 
 .navbutton.prevbutton[disabled] {
+  background: var(--google-codelab-fab-background);
+  color: white;
   transform: scale(0);
 }
 
@@ -198,6 +200,13 @@ h1 {
   font-size: 0.9em;
   position: fixed;
   bottom: 16px;
+}
+
+#last-updated {
+  color: var(--google-codelab-footer-text-color);
+  font-size: 0.9em;
+  position: fixed;
+  bottom: 32px;
 }
 
 #feedback a {

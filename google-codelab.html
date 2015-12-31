@@ -56,7 +56,7 @@ Example:
 @demo demo/codelab.html
 -->
 <dom-module id="google-codelab">
-  <template>
+  <template strip-whitespace>
     <style include="shared-style"></style>
     <style include="codelab-style"></style>
 
@@ -65,22 +65,28 @@ Example:
         on-iron-localstorage-load="_stateLoaded">
     </iron-localstorage>
 
-    <paper-drawer-panel narrow="{{narrow}}" selected="{{currDrawer}}" id="drawer">
+    <paper-drawer-panel narrow="{{_narrow}}" selected="{{currDrawer}}" id="drawer">
 
       <div drawer>
         <paper-menu id="toc" selected="{{selected}}"
                     on-iron-select="_allowCodelabComplete">
-          <template is="dom-repeat" items="{{steps}}">
+          <template is="dom-repeat" items="{{steps}}" strip-whitespace>
             <paper-item class$="{{_tocItemClass(selected, index)}}">
               <i>{{item.step}}</i><span>{{item.label}}</span>
             </paper-item>
           </template>
         </paper-menu>
 
-        <template is="dom-if" if="{{feedbackLink}}">
+        <template is="dom-if" if="{{feedbackLink}}" strip-whitespace>
           <div id="feedback">
             Did you find a mistake?
             <a target="_blank" href$="{{feedbackLink}}">Please file a bug</a>.
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{lastUpdated}}" strip-whitespace>
+          <div id="last-updated">
+            Last updated on {{lastUpdated}}.
           </div>
         </template>
 
@@ -88,10 +94,10 @@ Example:
 
       <paper-scroll-header-panel id="headerpanel" fixed main>
         <paper-toolbar>
-          <template is="dom-if" if="{{narrow}}">
+          <template is="dom-if" if="{{_narrow}}" strip-whitespace>
             <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           </template>
-          <template is="dom-if" if="{{!narrow}}">
+          <template is="dom-if" if="{{!_narrow}}" strip-whitespace>
             <paper-icon-button icon="arrow-back" on-tap="_goToHome"></paper-icon-button>
           </template>
           <h1 class="title">{{title}}</h1>
@@ -102,7 +108,8 @@ Example:
         </paper-toolbar>
 
         <neon-animated-pages id="pages" selected="{{selected}}"
-            on-iron-deselect="_onStepLeave">
+            on-iron-deselect="_onStepLeave"
+            on-iron-items-changed="_onStepsChanged">
           <content select="google-codelab-step"></content>
         </neon-animated-pages>
 
@@ -115,14 +122,14 @@ Example:
             </paper-fab>
 
             <div>
-              <template is="dom-if" if="{{_hideDoneFab(selected)}}">
+              <template is="dom-if" if="{{_showNextFab(selected, steps)}}" strip-whitespace>
                 <paper-fab icon="chevron-right" raised class="navbutton nextbutton"
                   title="{{_nextFabTitle(selected)}}"
                   on-tap="selectNext">
                 </paper-fab>
               </template>
 
-              <template is="dom-if" if="{{!_hideDoneFab(selected)}}">
+              <template is="dom-if" if="{{_showDoneFab(selected, steps)}}" strip-whitespace>
                 <paper-fab icon="done" raised class="navbutton donebutton"
                   on-tap="_goToHome" title="Complete codelab">
                 </paper-fab>
@@ -148,6 +155,11 @@ Example:
   <script>
     Polymer({
       is: 'google-codelab',
+
+      /**
+       * Fired when the codelab steps have been fully initialized.
+       * @event google-codelab-ready
+       */
 
       /**
        * Fired when user advances a codelab step or goes backwards.
@@ -226,6 +238,14 @@ Example:
         },
 
         /**
+         * Last date the codelab was updated, in YYYY-MM-DD format.
+         */
+        lastUpdated: {
+          type: String,
+          value: ''
+        },
+
+        /**
          * Step elements of the codelab. Currently, only `<google-codelab-step>`
          * elements are supported.
          * The steps are populated on 'attached': callback for distributed children
@@ -298,7 +318,7 @@ Example:
         this._updateStepIndexFromUrl();
       },
 
-      attached: function() {
+      _onStepsChanged: function() {
         var duration = 0;
         var steps = this.$.pages.items.map(function(item, i) {
           duration += item.duration;
@@ -308,6 +328,7 @@ Example:
         this._setSteps(steps);
         this._setDuration(duration);
         this._updateRemaining();
+        this.fire('google-codelab-ready', {steps: this.steps});
       },
 
       /**
@@ -420,6 +441,7 @@ Example:
       },
 
       _goToHome: function () {
+        // extract 'index' search param
         var index;
         var parts = location.search.substring(1).split('&');
         for (var i = 0; i < parts.length; i++) {
@@ -429,10 +451,15 @@ Example:
             break;
           }
         }
-        if (!index) {
-          index = '/';
+        // decode and extract index name from the search param
+        // default index is 'index'
+        index = index ? decodeURIComponent(index) : '';
+        index = index.replace(/[^a-z0-9\-]+/ig, '');
+        if (index === 'index') {
+          index = '';
         }
-        window.location.href = decodeURIComponent(index);
+        // navigate away to the index page
+        window.location.href = '/' + index;
       },
 
       _tocItemClass: function(selected, i) {
@@ -456,13 +483,17 @@ Example:
       },
 
       _isLastStep: function(stepIndex) {
-        if (isNaN(stepIndex) || !this.$.pages.items) {
-          return true;
+        if (!this.steps.length) {
+          return false;
         }
-        return !this.$.pages.items.length || stepIndex >= this.$.pages.items.length - 1;
+        return stepIndex >= this.steps.length - 1;
       },
 
-      _hideDoneFab: function(stepIndex) {
+      _showDoneFab: function(stepIndex, steps) {
+        return this._isLastStep(stepIndex);
+      },
+
+      _showNextFab: function(stepIndex, steps) {
         return !this._isLastStep(stepIndex);
       },
 

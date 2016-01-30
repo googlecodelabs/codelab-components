@@ -18,8 +18,6 @@ the License.
   <template>
     <style>
       :host {
-        --google-codelab-step-background: #fff;
-        --google-codelab-step-link-color: #0097A7;
         --google-codelab-step-note: {};
         --google-codelab-step-tip: {};
         --google-codelab-step-warn: {};
@@ -41,7 +39,7 @@ the License.
 
       .instructions {
         box-shadow: 1px 1px 16px #ccc;
-        background: var(--google-codelab-step-background);
+        background: var(--google-codelab-step-background, #fff);
         max-width: 800px;
         font-size: 14px;
         margin: 0 auto;
@@ -60,7 +58,7 @@ the License.
 
       .instructions ::content a,
       .instructions ::content a:visited {
-        color: var(--google-codelab-step-link-color);
+        color: var(--google-codelab-step-link-color, #0097A7);
       }
 
       .instructions ::content h2,

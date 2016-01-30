@@ -34,7 +34,8 @@ the License.
 
   <test-fixture id="codelab">
     <template>
-      <google-codelab title="Test title" feedback-link="http://codelab.example.org">
+      <google-codelab title="Test title" feedback-link="http://codelab.example.org"
+          last-updated="2015-01-28">
         <google-codelab-step label="First" duration="2">
           First step body
         </google-codelab-step>
@@ -101,6 +102,7 @@ the License.
           assert.equal(codelab.feedbackLink, 'http://codelab.example.org');
           assert.equal(codelab.steps[0].step, 1);
           assert.equal(codelab.steps[1].step, 2);
+          assert.equal(codelab.lastUpdated, '2015-01-28');
 
           assert.equal(codelab.querySelector('h1').textContent, 'Test title');
 

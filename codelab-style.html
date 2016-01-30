@@ -55,6 +55,7 @@ the License.
 
 paper-toolbar {
   background: var(--google-codelab-header-background, --paper-blue-600);
+  color: #fff;
 }
 
 paper-toolbar .title {
@@ -71,21 +72,15 @@ paper-fab {
   flex-shrink: 0;
 }
 
-h1 {
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 1em;
-  color: white;
-  padding: 0;
-  margin: 0.67em 8px;
+/* override external styles */
+:host([theme="minimal"]) #resumeDialog > * {
+  margin-top: 20px;
+  padding: 0 24px;
 }
 
-#countdown {
-  text-align: right;
-  vertical-align: bottom;
-  font-weight: 400;
-  min-width: 80px;
-  color: white;
+:host([theme="minimal"]) #resumeDialog .buttons {
+  padding: 8px 8px 8px 24px;
+  margin: 0;
 }
 
 #countdown iron-icon {
@@ -118,7 +113,7 @@ h1 {
 }
 
 .navbutton.prevbutton[disabled] {
-  background: var(--google-codelab-fab-background, );
+  background: var(--google-codelab-fab-background);
   color: white;
   transform: scale(0);
 }
@@ -133,6 +128,7 @@ h1 {
   overflow: hidden;
   border-radius: 4px;
   padding: 6px 16px;
+  box-sizing: content-box; /* override users that set * selector box-sizing. */
 }
 
 .toc-item i {
@@ -196,11 +192,19 @@ h1 {
 
 #metadata {
   color: var(--google-codelab-footer-text-color, #777);
-  font-size: 0.9em;
+  font-size: 0.7em;
+}
+
+:host(:not([theme="minimal"])) #metadata {
+  position: fixed;
+  bottom: 8px;
+  background-color: var(--paper-grey-100);
+  padding: 4px 8px;
 }
 
 #feedback a {
   color: currentcolor;
+  text-decoration: underline;
 }
 
 @media (min-width: 641px) {

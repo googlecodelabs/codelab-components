@@ -33,7 +33,6 @@ the License.
 <link rel="import" href="../paper-menu/paper-menu.html">
 <link rel="import" href="../paper-item/paper-item.html">
 
-<link rel="import" href="shared-style.html">
 <link rel="import" href="layout-style.html">
 <link rel="import" href="codelab-style.html">
 <link rel="import" href="analytics-behavior.html">
@@ -44,7 +43,8 @@ It expects to find one or more `google-codelab-step` elements in its content.
 
 Example:
 
-    <google-codelab title="Awesome codelab" feedback-link="http://example.org">
+    <google-codelab title="Awesome codelab" feedback-link="http://example.org"
+                    last-updated="2015-01-28">
       <google-codelab-step label="One" step="1" duration="10">
         ...
       </google-codelab-step>
@@ -53,12 +53,18 @@ Example:
       </google-codelab-step>
     </google-codelab>
 
+The element can also be used in a minimalistic mode where less styling is
+applied. Use the `theme="minimal"` attribute and combine with the
+`noToolbar`, `noArrows`, and `noHighlight` properties to turn off the top nav and
+prevent syntax highlighting code blocks, respectively:
+
+    <google-codelab theme="minimal" no-toolbar no-arrows no-highlight>
+
 @demo demo/codelab.html
 @demo demo/embed.html
 -->
 <dom-module id="google-codelab">
   <template strip-whitespace>
-    <style include="shared-style"></style>
     <style include="layout-style"></style>
     <style include="codelab-style"></style>
 
@@ -95,7 +101,7 @@ Example:
       </div>
 
       <paper-scroll-header-panel id="headerpanel" fixed main>
-        <paper-toolbar hidden$="[[hideToolbar]]">
+        <paper-toolbar hidden$="[[noToolbar]]">
           <template is="dom-if" if="{{_narrow}}" strip-whitespace>
             <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           </template>
@@ -119,7 +125,7 @@ Example:
 
     </paper-drawer-panel>
 
-    <footer id="controls">
+    <footer id="controls" hidden$="[[noArrows]]">
       <div class="fabs layout horizontal justified">
         <paper-fab raised class="navbutton prevbutton" icon="chevron-left"
           on-tap="selectPrevious"
@@ -269,9 +275,25 @@ Example:
         },
 
         /**
+         * Hides the topnav toolbar.
+         */
+        noToolbar: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * Hides the forward/background navigation arrows.
+         */
+        noArrows: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
          * Property determines whether the toolbar is hidden.
          */
-        hideToolbar: {
+        noHighlight: {
           type: Boolean,
           value: false,
           reflectToAttribute: true

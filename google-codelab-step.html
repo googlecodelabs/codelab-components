@@ -122,6 +122,13 @@ Custom property                         | Description
       _isHighlighted: false,
 
       _activeChanged: function() {
+        var codelab = Polymer.dom(this).parentNode;
+
+        // Don't syntax highlight code if google-codelab requests it.
+        if (codelab.localName === 'google-codelab' && codelab.noHighlight) {
+          return;
+        }
+
         if (this.active && !this._isHighlighted) {
 
           // Minimize jank by waiting one click to do syntax highlighting.

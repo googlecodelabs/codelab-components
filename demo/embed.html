@@ -20,19 +20,17 @@ the License.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>Embeddable codelab demo</title>
+  <link rel="stylesheet"
+      href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,700|Material+Icons">
+  <link rel="stylesheet"
+      href="https://developers.google.com/_static/80c6b067d5/css/devsite-google-blue.css">
+  <link rel="stylesheet" href="https://developers.google.com/maps/styles/common.css">
+
   <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
   <link rel="import" href="../../iron-icons/iron-icons.html">
   <link rel="import" href="../../paper-button/paper-button.html">
   <link rel="import" href="../google-codelab-elements.html">
   <style is="custom-style">
-    html, body {
-      height: 100%;
-    }
-    body {
-      padding: 40px;
-      color: #212121;
-      font: 400 16px/24px Roboto,sans-serif;
-    }
     #container {
       display: flex;
       justify-content: center;
@@ -41,15 +39,11 @@ the License.
       margin: 0 auto;
     }
     google-codelab {
-      height: 600px;
+      height: 700px;
       /*background-color: #eee;*/
-    }
-    h1, h2 {
-      font-weight: inherit;
     }
     :root {
       --google-codelab-background: transparent;
-      --google-codelab-step-background: transparent;
 
       /* Other customizations */
       /*--google-codelab-step-link-color: initial;*/
@@ -70,8 +64,10 @@ the License.
                   title="Build Google Maps Using Web Components & No Code!"
                   feedback-link="https://github.com/googlecodelabs"
                   environment="web"
-                  hide-toolbar
-                  last-updated="2015-01-28">
+                  last-updated="2015-01-28"
+                  no-toolbar
+                  no-arrows
+                  no-highlight>
 
     <google-codelab-step label="Overview" duration="2">
 

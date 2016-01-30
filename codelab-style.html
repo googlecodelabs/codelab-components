@@ -83,9 +83,18 @@ paper-fab {
   margin: 0;
 }
 
-#countdown iron-icon {
+.countdown iron-icon {
   margin-right: 3px;
-  --iron-icon-fill-color: rgba(255, 255, 255, 0.8);
+}
+
+:host(:not([theme="minimal"])) [drawer] .countdown {
+  display: none;
+}
+
+:host([theme="minimal"]) [drawer] .countdown {
+  padding: 0 16px 16px 16px;
+  font-style: italic;
+  color: var(--paper-blue-500);
 }
 
 #controls {

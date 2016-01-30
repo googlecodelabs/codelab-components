@@ -75,8 +75,13 @@ prevent syntax highlighting code blocks, respectively:
 
     <paper-drawer-panel id="drawer" narrow="{{_narrow}}" selected="{{currDrawer}}">
 
-      <div drawer class="layout vertical justified">
-        <paper-menu id="toc" selected="{{selected}}"
+      <div drawer class="layout vertical">
+        <div title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}"
+             class="countdown layout horizontal">
+          <iron-icon icon="schedule"></iron-icon> <span>{{remaining}}</span>
+        </div>
+
+        <paper-menu id="toc" class="flex" selected="{{selected}}"
                     on-iron-select="_allowCodelabComplete">
           <template is="dom-repeat" items="{{steps}}" strip-whitespace>
             <paper-item class$="{{_tocItemClass(selected, index)}}">
@@ -109,8 +114,8 @@ prevent syntax highlighting code blocks, respectively:
             <paper-icon-button icon="arrow-back" on-tap="_goToHome"></paper-icon-button>
           </template>
           <h1 class="title">{{title}}</h1>
-          <div id="countdown" title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}"
-               class="layout horizontal">
+          <div title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}"
+               class="countdown layout horizontal">
             <iron-icon icon="schedule"></iron-icon> <span>{{remaining}}</span>
           </div>
         </paper-toolbar>

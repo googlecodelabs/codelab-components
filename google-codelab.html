@@ -54,6 +54,7 @@ Example:
     </google-codelab>
 
 @demo demo/codelab.html
+@demo demo/embed.html
 -->
 <dom-module id="google-codelab">
   <template strip-whitespace>
@@ -93,7 +94,7 @@ Example:
       </div>
 
       <paper-scroll-header-panel id="headerpanel" fixed main>
-        <paper-toolbar>
+        <paper-toolbar hidden$="[[hideToolbar]]">
           <template is="dom-if" if="{{_narrow}}" strip-whitespace>
             <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           </template>
@@ -264,6 +265,15 @@ Example:
         state: {
           type: Object,
           value: null
+        },
+
+        /**
+         * Property determines whether the toolbar is hidden.
+         */
+        hideToolbar: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
         },
 
         /**

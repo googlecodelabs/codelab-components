@@ -55,7 +55,10 @@ the License.
       function verifySecondSelected(codelab) {
         assert.equal(codelab.selected, 1, 'selected');
         assert.equal(codelab.remaining, '3 min remaining', 'remaining');
-        assert.match(codelab.$.countdown.textContent.trim(), /3 min/);
+        var countdowns = codelab.root.querySelectorAll('.countdown');
+        for (var i = 0, countdown; countdown = countdowns[i]; ++i) {
+          assert.match(countdown.textContent.trim(), /3 min/);
+        }
         assert.equal(location.hash, '#1', 'location.hash');
         assert.equal(codelab.$.toc.selected, 1, '$.toc.selected');
         assert(!codelab.querySelector('.prevbutton').disabled, 'prev fab is disabled');
@@ -193,7 +196,12 @@ the License.
           async.nextTick(function() {
             assert.equal(codelab.selected, 0, 'selected');
             assert.equal(codelab.remaining, '5 min remaining', 'remaining');
-            assert.match(codelab.$.countdown.textContent.trim(), /5 min/);
+
+            var countdowns = codelab.root.querySelectorAll('.countdown');
+            for (var i = 0, countdown; countdown = countdowns[i]; ++i) {
+              assert.match(codelab.$.countdown.textContent.trim(), /5 min/);
+            }
+
             assert.equal(codelab.$.toc.selected, 0, '$.toc.selected');
             assert(location.hash === '#0' || location.hash === '', 'location.hash');
             assert(codelab.querySelector('.prevbutton').disabled, 'prev fab is not disabled');

@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2015 Google Inc.
+Copyright (c) 2016 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
@@ -18,8 +18,6 @@ the License.
   <template>
     <style>
       :host {
-        --google-codelab-step-background: #fff;
-        --google-codelab-step-link-color: #0097A7;
         --google-codelab-step-note: {};
         --google-codelab-step-tip: {};
         --google-codelab-step-warn: {};
@@ -39,9 +37,9 @@ the License.
         margin: 0 0 30px;
       }
 
-      .instructions {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions {
         box-shadow: 1px 1px 16px #ccc;
-        background: var(--google-codelab-step-background);
+        background: var(--google-codelab-step-background, #fff);
         max-width: 800px;
         font-size: 14px;
         margin: 0 auto;
@@ -52,76 +50,80 @@ the License.
         padding: 24px;
       }
 
+      :host-context(google-codelab[theme="minimal"]) .instructions .inner {
+        padding: 0 24px;
+      }
+
       @media (max-width: 800px) {
         .instructions {
           margin: 0 0 16px 0;
         }
       }
 
-      .instructions ::content a,
-      .instructions ::content a:visited {
-        color: var(--google-codelab-step-link-color);
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content a,
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content a:visited {
+        color: var(--google-codelab-step-link-color, #0097A7);
       }
 
-      .instructions ::content h2,
-      .instructions ::content h3,
-      .instructions ::content h4 {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h2,
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h3,
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h4 {
         font-weight: 400;
         margin: 0;
       }
 
-      .instructions ::content h2 {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h2 {
         font-weight: 300;
         line-height: 1em;
         font-size: 22px;
       }
 
-      .instructions ::content {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content {
         line-height: 24px;
       }
 
-      .instructions ::content li {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content li {
         margin: 0.5em 0;
       }
 
-      .instructions ::content h2 {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h2 {
         font-weight: 500;
         margin: 1.5em 0 0 0;
         font-size: 20px;
       }
 
-      .instructions ::content h3 {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h3 {
         font-weight: 500;
         margin: 20px 0 0 0;
       }
 
-      .instructions ::content aside {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside {
         padding: 0.5em 1em;
         margin: 2em 0;
         border-left: 4px solid;
       }
 
-      .instructions ::content aside p {
+      :host-context(google-codelab:not([theme="minimal"]))  :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside p {
         margin: 0.5em 0;
       }
 
-      .instructions ::content aside.note,
-      .instructions ::content aside.notice {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.note,
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.notice {
         border-color: #fca;
         background: #fed;
         color: #842;
         @apply(--google-codelab-step-note);
       }
 
-      .instructions ::content aside.tip,
-      .instructions ::content aside.special {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.tip,
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.special {
         border-color: #6a6;
         background: #ded;
         color: #464;
         @apply(--google-codelab-step-tip);
       }
 
-      .instructions ::content aside.warning {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.warning {
         border-color: #DB8A61;
         background: #fed;
         color: #842;
@@ -169,15 +171,11 @@ the License.
 
       .instructions ::content paper-button a {
         text-decoration: none;
+        color: inherit !important;
       }
 
       .instructions ::content paper-button.colored {
         background-color: #0F9D58;
-        color: #fff;
-      }
-
-      .instructions ::content paper-button.colored a,
-      .instructions ::content paper-button.colored a:visited {
         color: #fff;
       }
 
@@ -205,26 +203,26 @@ the License.
         margin: 0;
       }
 
-      .instructions ::content h3.faq {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h3.faq {
         border-bottom: 1px solid #ddd;
       }
 
-      .instructions ::content ul.faq {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content ul.faq {
         list-style: none;
         padding-left: 1em;
       }
 
-      .instructions ::content .faq li {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content .faq li {
         font-size: 1.1em;
         margin-bottom: 0.8em;
       }
 
-      .instructions ::content .faq a {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content .faq a {
         color: inherit;
         text-decoration: none;
       }
 
-      .instructions ::content .faq a:hover {
+      :host-context(google-codelab:not([theme="minimal"])) .instructions ::content .faq a:hover {
         text-decoration: underline;
       }
 

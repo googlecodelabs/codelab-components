@@ -1,6 +1,6 @@
 {
   "name": "codelab-components",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "private": true,
   "main": "google-codelab-elements.html",
   "license": "Apache2",
@@ -28,6 +28,6 @@
     "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.0.2",
     "test-fixture": "PolymerElements/test-fixture#^1.0.0",
     "web-component-tester": "*",
-    "iron-component-page": "PolymerElements/iron-component-page#~1.0.8"
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.8"
   }
 }

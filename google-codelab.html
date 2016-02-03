@@ -177,7 +177,7 @@ prevent syntax highlighting code blocks, respectively:
       /**
        * Fired when user advances a codelab step or goes backwards.
        * @event google-codelab-step
-       * @detail {{step: Object, index: Number}}
+       * detail {{step: Object, index: Number}}
        */
 
       /**
@@ -350,7 +350,7 @@ prevent syntax highlighting code blocks, respectively:
       ready: function() {
         // TODO: cannot be done on prototype.
         // SEe https://github.com/PolymerElements/iron-a11y-keys-behavior/issues/19
-        this.keyEventTarget = document.body;
+        this.keyEventTarget = /** @type {!HTMLBodyElement} */(document.body);
 
         // select the step early, before localStorage is loaded
         this._updateStepIndexFromUrl();
@@ -410,7 +410,7 @@ prevent syntax highlighting code blocks, respectively:
         var step = this.steps[this.selected];
         step.active = true;
 
-        location.hash = this.selected;
+        location.hash = this.selected.toString();
 
         this.fire('google-codelab-step', {index: this.selected, step: step});
 
@@ -447,7 +447,7 @@ prevent syntax highlighting code blocks, respectively:
       },
 
       _updateStepIndexFromUrl: function() {
-        var step = parseInt(location.hash.slice(1));
+        var step = parseInt(location.hash.slice(1), 10);
         if (isNaN(step) || step < 0) {
           step = 0;
         }

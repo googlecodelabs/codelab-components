@@ -15,14 +15,14 @@ the License.
 -->
 
 <script>
+
+  var GoogleCodelabs = window.GoogleCodelabs || {};
+
   /**
    * `GoogleCodelabs.AnalyticsBehavior` implements Google Analytics functionality.
    *
    * @polymerBehavior GoogleCodelabs.AnalyticsBehavior
    */
-
-  GoogleCodelabs = window.GoogleCodelabs || {};
-
   GoogleCodelabs.AnalyticsBehavior = {
     listeners: {
       'google-codelab-step': '_trackStepChanged',
@@ -37,7 +37,7 @@ the License.
       params.hitType = hit;
       params.dimension1 = target.environment;
       params.dimension2 = target.category;
-      window.ga(function() {
+      window['ga'](function() {
         var trackers = ga.getAll();
         for (var i = 0; i < trackers.length; i++) {
           var tracker = trackers[i];

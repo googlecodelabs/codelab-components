@@ -86,7 +86,7 @@ Custom property                     | Description
       /**
        * Fired when user answers a survey question.
        * @event google-codelab-survey-answer
-       * @detail {{question: String, answer: String}}
+       * detail {{question: String, answer: String}}
        */
 
       properties: {
@@ -95,7 +95,10 @@ Custom property                     | Description
          * It is important to set this to a non-empty string
          * when hosting 2+ codelabs/surveys on the same domain.
          */
-        surveyId: '',
+        surveyId: {
+          type: String,
+          value: ''
+        },
 
         /**
          * All answers, synced with `localStorage`.
@@ -131,7 +134,7 @@ Custom property                     | Description
       _storageLoaded: function() {
         var elems = this.getContentChildren();
         var answer = '';
-        for (var i = 0; elem = elems[i]; i++) {
+        for (var i = 0, elem; elem = elems[i]; i++) {
           if (elem.tagName === 'H4') {
             answer = this.answers[this._elemText(elem)];
             continue;
@@ -143,6 +146,10 @@ Custom property                     | Description
         }
       },
 
+      /**
+       * @param {?} groupEl .
+       * @param {?=} value .
+       */
       _selectAnswer: function(groupEl, value) {
         for (var i = 0, elem; elem = groupEl.children[i]; i++) {
           if (!elem.name) {

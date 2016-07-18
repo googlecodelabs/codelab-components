@@ -22,7 +22,8 @@
     "paper-radio-group": "PolymerElements/paper-radio-group#^1.0.4",
     "paper-styles": "PolymerElements/paper-styles#^1.0.11",
     "paper-toolbar": "PolymerElements/paper-toolbar#^1.0.4",
-    "google-prettify": "google/code-prettify"
+    "google-prettify": "google/code-prettify",
+    "app-layout": "PolymerElements/app-layout#^0.10.0"
   },
   "devDependencies": {
     "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.0.2",

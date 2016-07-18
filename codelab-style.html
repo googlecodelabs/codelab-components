@@ -29,14 +29,12 @@ the License.
     background: inherit;
     padding: 0;
   };
-  --paper-drawer-panel-left-drawer-container: {
+
+  --app-drawer-content-container: {
     background: var(--google-codelab-background, --paper-grey-100);
-    overflow-y: auto;
-    z-index: 1;
   };
-  --paper-drawer-panel-main-container: {
-    background: var(--google-codelab-background, --paper-grey-300);
-  };
+
+  --nav-height: 64px;
 }
 
 
@@ -44,23 +42,51 @@ the License.
   position: relative;
 }
 
-:host(:not([theme="minimal"])) [drawer] {
-  height: auto !important; /* override default styling */
-  margin: 16px 16px 16px 12px;
+#headerpanel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  margin-left: 256px; /* drawer width */
 }
 
+#headerpanel[narrow] {
+  margin-left: 0;
+}
+
+.drawer-content-wrapper {
+  padding: 16px;
+}
+
+#main-content {
+  background: var(--google-codelab-background, --paper-grey-300);
+}
+
+#pages {
+  top: var(--nav-height);
+}
 
 #controls[narrow] {
   width: 100%;
 }
 
-paper-toolbar {
+#main-toolbar {
   background: var(--google-codelab-header-background, --paper-blue-600);
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+  padding: 0 16px;
 }
 
-paper-toolbar .title {
+#main-toolbar .title {
   margin: 0 8px;
+  flex: 1;
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 paper-icon-button[icon=menu] {
@@ -88,11 +114,11 @@ paper-fab {
   margin-right: 3px;
 }
 
-:host(:not([theme="minimal"])) [drawer] .countdown {
+:host(:not([theme="minimal"])) #drawer .countdown {
   display: none;
 }
 
-:host([theme="minimal"]) [drawer] .countdown {
+:host([theme="minimal"]) #drawer .countdown {
   padding: 0 16px 16px 16px;
   font-style: italic;
   color: var(--paper-blue-500);
@@ -101,7 +127,7 @@ paper-fab {
 }
 
 #controls {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 16px;
   padding: 0 16px;
@@ -205,18 +231,11 @@ paper-fab {
 #metadata {
   color: var(--google-codelab-footer-text-color, #777);
   font-size: 0.7em;
-}
-
-:host(:not([theme="minimal"])) #metadata {
-  position: fixed;
-  bottom: 8px;
-  background-color: var(--paper-grey-100);
-  padding: 4px 8px;
+  flex: 0 0 80px;
 }
 
 #feedback a {
   color: currentcolor;
-  text-decoration: underline;
 }
 
 @media (min-width: 641px) {

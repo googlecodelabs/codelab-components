@@ -107,7 +107,7 @@ the License.
           assert.equal(codelab.steps[1].step, 2);
           assert.equal(codelab.lastUpdated, '2015-01-28');
 
-          assert.equal(codelab.querySelector('h1').textContent, 'Test title');
+          assert.equal(codelab.querySelector('.title').textContent, 'Test title');
 
           // TOC dom-repeat needs another microtask to render
           async.nextTick(function() {

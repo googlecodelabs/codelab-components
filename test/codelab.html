@@ -54,7 +54,7 @@ the License.
 
       function verifySecondSelected(codelab) {
         assert.equal(codelab.selected, 1, 'selected');
-        assert.equal(codelab.remaining, '3 min remaining', 'remaining');
+        assert.equal(codelab.remaining, '3 min', 'remaining');
         var countdowns = codelab.root.querySelectorAll('.countdown');
         for (var i = 0, countdown; countdown = countdowns[i]; ++i) {
           assert.match(countdown.textContent.trim(), /3 min/);
@@ -101,7 +101,7 @@ the License.
         codelab.addEventListener('google-codelab-ready', function(e) {
           assert.equal(codelab.selected, 0);
           assert.equal(codelab.duration, 5);
-          assert.equal(codelab.remaining, '5 min remaining');
+          assert.equal(codelab.remaining, '5 min');
           assert.equal(codelab.feedbackLink, 'http://codelab.example.org');
           assert.equal(codelab.steps[0].step, 1);
           assert.equal(codelab.steps[1].step, 2);
@@ -195,7 +195,7 @@ the License.
           // allow $.toc to render the items
           async.nextTick(function() {
             assert.equal(codelab.selected, 0, 'selected');
-            assert.equal(codelab.remaining, '5 min remaining', 'remaining');
+            assert.equal(codelab.remaining, '5 min', 'remaining');
 
             var countdowns = codelab.root.querySelectorAll('.countdown');
             for (var i = 0, countdown; countdown = countdowns[i]; ++i) {

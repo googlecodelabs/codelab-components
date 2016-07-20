@@ -20,23 +20,28 @@ the License.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>codelab demo</title>
-  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js" aysnc></script>
+  <script>
+    window.Polymer = window.Polymer || {dom: 'shadow', lazyRegister: true};
+  </script>
   <link rel="stylesheet"
       href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,700">
   <link rel="import" href="../../iron-icons/iron-icons.html">
   <link rel="import" href="../../paper-button/paper-button.html">
   <link rel="import" href="../google-codelab-elements.html">
-  <style>
-  body {
-    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial;
-  }
+  <style is="custom-style">
+    body {
+      font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial;
+      background: var(--google-codelab-background, --paper-grey-300);
+    }
   </style>
 </head>
-<body unresolved class="fullbleed">
+<body>
 
   <google-codelab title="Build Google Maps Using Web Components & No Code!"
                   feedback-link="https://github.com/googlecodelabs"
-                  environment="web">
+                  environment="web"
+                  last-updated="2016-07-18">
 
     <google-codelab-step label="Overview" duration="2">
 

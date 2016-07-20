@@ -23,9 +23,10 @@ the License.
 <link rel="import" href="../neon-animation/animations/slide-from-left-animation.html">
 <link rel="import" href="../neon-animation/animations/slide-right-animation.html">
 <link rel="import" href="../neon-animation/animations/slide-left-animation.html">
-<link rel="import" href="../paper-drawer-panel/paper-drawer-panel.html">
-<link rel="import" href="../paper-scroll-header-panel/paper-scroll-header-panel.html">
-<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
@@ -73,87 +74,97 @@ prevent syntax highlighting code blocks, respectively:
         on-iron-localstorage-load="_stateLoaded">
     </iron-localstorage>
 
-    <paper-drawer-panel id="drawer" narrow="{{_narrow}}" selected="{{currDrawer}}">
+    <app-drawer-layout fullbleed narrow="{{_narrow}}" >
+      <app-drawer id="drawer" swipe-open>
 
-      <div drawer class="layout vertical">
-        <div title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}"
-             class="countdown layout horizontal">
-          <iron-icon icon="schedule"></iron-icon> <span>{{remaining}}</span>
-        </div>
+        <div class="drawer-content-wrapper layout vertical" style="height:100%">
 
-        <paper-menu id="toc" class="flex" selected="{{selected}}"
-                    on-iron-select="_allowCodelabComplete">
-          <template is="dom-repeat" items="{{steps}}" strip-whitespace>
-            <paper-item class$="{{_tocItemClass(selected, index)}}">
-              <i>{{item.step}}</i><span>{{item.label}}</span>
-            </paper-item>
-          </template>
-        </paper-menu>
+          <div class="flex" style="overflow: auto;">
+            <div title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}"
+                 class="countdown layout horizontal">
+              <iron-icon icon="schedule"></iron-icon> <span>[[remaining]]</span>
+            </div>
 
-        <div id="metadata">
-          <template is="dom-if" if="{{feedbackLink}}" strip-whitespace>
-            <div id="feedback">
+            <paper-menu id="toc" class="flex" selected="{{selected}}"
+                        on-iron-select="_allowCodelabComplete">
+              <template is="dom-repeat" items="{{steps}}" strip-whitespace>
+                <paper-item class$="{{_tocItemClass(selected, index)}}">
+                  <i>{{item.step}}</i><span>{{item.label}}</span>
+                </paper-item>
+              </template>
+            </paper-menu>
+          </div>
+
+          <div id="metadata">
+            <template is="dom-if" if="{{lastUpdated}}" strip-whitespace>
+              <div id="last-updated">Last updated on {{lastUpdated}}.</div>
+            </template>
+            <div id="feedback" hidden$="[[!feedbackLink]]">
               Did you find a mistake?
               <a target="_blank" href$="{{feedbackLink}}">Please file a bug</a>.
             </div>
-          </template>
-
-          <template is="dom-if" if="{{lastUpdated}}" strip-whitespace>
-            <div id="last-updated">Last updated on {{lastUpdated}}.</div>
-          </template>
-        </div>
-
-      </div>
-
-      <paper-scroll-header-panel id="headerpanel" fixed main>
-        <paper-toolbar hidden$="[[noToolbar]]">
-          <template is="dom-if" if="{{_narrow}}" strip-whitespace>
-            <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-          </template>
-          <template is="dom-if" if="{{!_narrow}}" strip-whitespace>
-            <paper-icon-button icon="arrow-back" on-tap="_goToHome"></paper-icon-button>
-          </template>
-          <h1 class="title">{{title}}</h1>
-          <div title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}"
-               class="countdown layout horizontal">
-            <iron-icon icon="schedule"></iron-icon> <span>{{remaining}}</span>
           </div>
-        </paper-toolbar>
 
-        <neon-animated-pages id="pages" selected="{{selected}}"
-            on-iron-deselect="_onStepLeave"
-            on-iron-items-changed="_onStepsChanged">
-          <content select="google-codelab-step"></content>
-        </neon-animated-pages>
-
-      </paper-scroll-header-panel>
-
-    </paper-drawer-panel>
-
-    <footer id="controls" hidden$="[[noArrows]]" narrow$="[[_narrow]]">
-      <div class="fabs layout horizontal justified">
-        <paper-fab raised class="navbutton prevbutton" icon="chevron-left"
-          on-tap="selectPrevious"
-          title="Previous step"
-          disabled$="{{_isFirstStep(selected)}}">
-        </paper-fab>
-
-        <div>
-          <template is="dom-if" if="{{_showNextFab(selected, steps)}}" strip-whitespace>
-            <paper-fab icon="chevron-right" raised class="navbutton nextbutton"
-              title="{{_nextFabTitle(selected)}}"
-              on-tap="selectNext">
-            </paper-fab>
-          </template>
-
-          <template is="dom-if" if="{{_showDoneFab(selected, steps)}}" strip-whitespace>
-            <paper-fab icon="done" raised class="navbutton donebutton"
-              on-tap="_goToHome" title="Complete codelab">
-            </paper-fab>
-          </template>
         </div>
-      </div>
-    </footer>
+
+      </app-drawer>
+
+      <app-header-layout fullbleed>
+
+        <div id="headerpanel" fixed narrow$="[[_narrow]]">
+          <div id="main-toolbar" hidden$="[[noToolbar]]">
+            <div>
+              <template is="dom-if" if="{{_narrow}}" strip-whitespace>
+                <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+              </template>
+              <template is="dom-if" if="{{!_narrow}}" strip-whitespace>
+                <paper-icon-button icon="arrow-back" on-tap="_goToHome"></paper-icon-button>
+              </template>
+            </div>
+            <h3 class="title">[[title]]</h3>
+            <div title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}"
+                 class="countdown layout horizontal">
+              <iron-icon icon="schedule"></iron-icon> <span>{{remaining}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="main-content">
+
+          <neon-animated-pages id="pages" selected="{{selected}}"
+              on-iron-deselect="_onStepLeave"
+              on-iron-items-changed="_onStepsChanged">
+            <content select="google-codelab-step"></content>
+          </neon-animated-pages>
+
+          <footer id="controls" hidden$="[[noArrows]]" narrow$="[[_narrow]]">
+            <div class="fabs layout horizontal justified">
+              <paper-fab raised class="navbutton prevbutton" icon="chevron-left"
+                on-tap="selectPrevious"
+                title="Previous step"
+                disabled$="{{_isFirstStep(selected)}}">
+              </paper-fab>
+
+              <div>
+                <template is="dom-if" if="{{_showNextFab(selected, steps)}}" strip-whitespace>
+                  <paper-fab icon="chevron-right" raised class="navbutton nextbutton"
+                    title="{{_nextFabTitle(selected)}}"
+                    on-tap="selectNext">
+                  </paper-fab>
+                </template>
+
+                <template is="dom-if" if="{{_showDoneFab(selected, steps)}}" strip-whitespace>
+                  <paper-fab icon="done" raised class="navbutton donebutton"
+                    on-tap="_goToHome" title="Complete codelab">
+                  </paper-fab>
+                </template>
+              </div>
+            </div>
+          </footer>
+        </div>
+
+      </app-header-layout>
+    </app-drawer-layout>
 
     <paper-dialog id="resumeDialog" modal>
       <h2>Would you like to resume where you left off?</h2>
@@ -469,7 +480,8 @@ prevent syntax highlighting code blocks, respectively:
         this.steps.slice(this.selected).forEach(function(item) {
           remain += (item.duration || 0);
         });
-        this._setRemaining(remain + ' min remaining');
+        var str = this._narrow ? '' : ' remaining';
+        this._setRemaining(remain + ' min' + str);
       },
 
       _resume: function() {
@@ -509,7 +521,7 @@ prevent syntax highlighting code blocks, respectively:
       },
 
       _scrollToTopOfStep: function() {
-        this.$.headerpanel.scrollToTop();
+        document.body.scrollTop = 0;
       },
 
       _isPositiveNum: function(duration) {

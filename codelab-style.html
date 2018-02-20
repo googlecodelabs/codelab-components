@@ -15,6 +15,7 @@ the License.
 -->
 
 <link rel="import" href="../paper-styles/color.html">
+<link href="https://fonts.googleapis.com/css?family=Google+Sans" rel="stylesheet">
 
 <dom-module id="codelab-style">
   <template strip-whitespace>
@@ -31,7 +32,7 @@ the License.
   };
 
   --app-drawer-content-container: {
-    background: var(--google-codelab-background, --paper-grey-100);
+    background: var(--google-codelab-background, #FFFFFF);
   };
 
   --nav-height: 64px;
@@ -60,10 +61,11 @@ app-drawer-layout {
 
 .drawer-content-wrapper {
   padding: 16px;
+  border-right: 1px solid #E0E0E0;
 }
 
 #main-content {
-  background: var(--google-codelab-background, --paper-grey-300);
+  background: var(--google-codelab-background, --paper-blue-300);
 }
 
 #pages {
@@ -75,8 +77,9 @@ app-drawer-layout {
 }
 
 #main-toolbar {
-  background: var(--google-codelab-header-background, --paper-blue-600);
-  color: #fff;
+  background: var(--google-codelab-header-background, #FFFFFF);
+  box-shadow: 0px 1px 2px 0px rgba(60, 64, 67, 0.3), 0px 2px 6px 2px rgba(60, 64, 67, 0.15);
+  color: #3C4043;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -88,6 +91,7 @@ app-drawer-layout {
   margin: 0 8px;
   flex: 1;
   font-weight: 300;
+  font-family: 'Google Sans', Arial, sans-serif;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -142,28 +146,45 @@ paper-fab {
 
 #controls .fabs {
   /* Note: custom props don't work in calc(). */
-  max-width: calc(800px + 175px);
+  max-width: calc(800px + 250px);
   margin: 0 auto;
 }
 
 .navbutton {
+  border-radius: 4px;
+  font-family: 'Google Sans', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .6px;
+  padding-bottom: 6px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 6px;
   pointer-events: initial; /* make sure buttons are clickable */
+  text-transform: none;
+}
+
+.navbutton.nextbutton {
+  background: #1A73E8;
+  color: #FFFFFF;
 }
 
 .navbutton.prevbutton {
+  background: #FFFFFF;
+  color: #1A73E8;
   transition: transform 300ms ease-in-out;
 }
 
 .navbutton.prevbutton[disabled] {
-  background: var(--google-codelab-fab-background);
   color: white;
   transform: scale(0);
 }
 
 .navbutton.donebutton {
-  background: var(--google-green-500);
+  background: #34A853;
+  color: #FFFFFF;
 }
-        
+
 #toc {
   /* ensures bottom of nav scrolling meny doesn't overlap with file bug link. */
   margin-bottom: 1.5em;
@@ -171,34 +192,35 @@ paper-fab {
 
 .toc-item {
   font-size: 14px;
-  color: var(--paper-grey-500);
+  color: #80868B;
   overflow: hidden;
   border-radius: 4px;
   padding: 6px 16px;
   box-sizing: content-box; /* override users that set * selector box-sizing. */
+  line-height: 20px;
+  font-weight: 400;
 }
 
 .toc-item i {
+  color: #FFFFFF;
   display: inline-block;
   font-style: normal;
-  width: 24px;
-  min-width: 24px;
-  background: #fff;
+  width: 26px;
+  min-width: 26px;
+  background: #80868B;
   border-radius: 50%;
   text-align: center;
-  height: 24px;
+  height: 26px;
   vertical-align: middle;
-  line-height: 24px;
-  border: 2px solid var(--paper-grey-400);
+  line-height: 26px;
   margin-right: 8px;
-  font-weight: 400;
 }
 
 .toc-item i::before,
 .toc-item i::after {
   content: '';
   display: block;
-  border-left: 1px solid var(--paper-grey-400);
+  border-left: 2px solid #80868B;
   width: 0;
   height: 44px;
   z-index: 1;
@@ -218,9 +240,14 @@ paper-fab {
   color: var(--paper-grey-900);
 }
 
+.toc-item.completed i,
+.toc-item.iron-selected i {
+  background-color: #1A73E8;
+}
+
 .toc-item.iron-selected {
   color: var(--paper-grey-900);
-  background-color: var(--paper-grey-300);
+  background-color: #E0E0E0;
   font-weight: 600;
 }
 
@@ -229,7 +256,7 @@ paper-fab {
 .toc-item.completed i::after,
 .toc-item.iron-selected i,
 .toc-item.iron-selected i:before {
-  border-color: var(--paper-blue-500);
+  border-color: #1A73E8;
 }
 
 .toc-item:first-of-type i::before,

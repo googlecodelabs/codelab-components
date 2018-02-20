@@ -31,19 +31,22 @@ the License.
       }
 
       #title {
+        font-family: 'Google Sans', Arial, sans-serif;
         font-size: 28px;
         font-weight: 400;
         line-height: 1em;
         margin: 0 0 30px;
       }
 
+
       :host-context(google-codelab:not([theme="minimal"])) .instructions {
-        box-shadow: 1px 1px 16px #ccc;
+        box-shadow: 0px 1px 2px 0px rgba(60, 64, 67, 0.3), 0px 2px 6px 2px rgba(60, 64, 67, 0.15);
         background: var(--google-codelab-step-background, #fff);
         max-width: 800px;
         font-size: 14px;
         margin: 0 auto;
         margin-bottom: 32px;
+        border-radius: 4px;
       }
 
       .instructions .inner {
@@ -62,7 +65,7 @@ the License.
 
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content a,
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content a:visited {
-        color: var(--google-codelab-step-link-color, #0097A7);
+        color: var(--google-codelab-step-link-color, #1A73E8);
       }
 
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h2,
@@ -101,6 +104,7 @@ the License.
         padding: 0.5em 1em;
         margin: 2em 0;
         border-left: 4px solid;
+        border-radius: 4px;
       }
 
       :host-context(google-codelab:not([theme="minimal"]))  :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside p {
@@ -109,39 +113,41 @@ the License.
 
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.note,
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.notice {
-        border-color: #fca;
-        background: #fed;
-        color: #842;
+        border-color: #EA8600;
+        background: #FEF7E0;
+        color: #3C4043;
         @apply(--google-codelab-step-note);
       }
 
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.tip,
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.special {
-        border-color: #6a6;
-        background: #ded;
-        color: #464;
+        border-color: #137333;
+        background: #E6F4EA;
+        color: #3C4043;
         @apply(--google-codelab-step-tip);
       }
 
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.warning {
-        border-color: #DB8A61;
-        background: #fed;
-        color: #842;
+        border-color: #EA8600;
+        background: #FEF7E0;
+        color: #3C4043;
         @apply(--google-codelab-step-warn);
       }
 
       .instructions ::content aside.callout {
-        background-color: #f4f8fa;
+        background-color: #E8F0FE;
         margin: 20px 0;
         padding: 15px;
-        border-left: 3px solid #4f7dc9;
+        border-left: 3px solid #185ABC;
+        border-radius: 4px;
+        color: #3C4043;
         font-size: 14px;
         line-height: 1.5;
         @apply(--google-codelab-step-callout);
       }
 
       .instructions ::content aside.callout b {
-        color: #4f7dc9;
+        color: #185ABC;
       }
 
       .instructions ::content ul.checklist {
@@ -169,18 +175,38 @@ the License.
         font-weight: 600;
       }
 
+      .instructions ::content paper-button {
+        border-radius: 4px;
+        color: #FFFFFF;
+        font-family: 'Google Sans', Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: .6px;
+        padding-bottom: 6px;
+        padding-left: 12px;
+        padding-right: 16px;
+        padding-top: 6px;
+        text-transform: none;
+      }
+
       .instructions ::content paper-button a {
         text-decoration: none;
         color: inherit !important;
       }
 
       .instructions ::content paper-button.colored {
-        background-color: #0F9D58;
-        color: #fff;
+        background-color: #34A853;
       }
 
+
       .instructions ::content paper-button.red {
-        background-color: #DB4437;
+        background-color: #EA4335;
+      }
+
+      .instructions ::content iron-icon {
+        padding-right: 8px;
+        max-height: 16px;
+        max-width: 16px;
       }
 
       .instructions ::content img {

@@ -65,7 +65,7 @@ the License.
 
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content a,
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content a:visited {
-        color: var(--google-codelab-step-link-color, #1A73E8);
+        color: var(--google-codelab-step-link-color, --google-material-blue-600);
       }
 
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content h2,
@@ -115,7 +115,7 @@ the License.
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.notice {
         border-color: #EA8600;
         background: #FEF7E0;
-        color: #3C4043;
+        color: var(--google-material-grey-900);
         @apply(--google-codelab-step-note);
       }
 
@@ -123,14 +123,14 @@ the License.
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.special {
         border-color: #137333;
         background: #E6F4EA;
-        color: #3C4043;
+        color: var(--google-material-grey-900);
         @apply(--google-codelab-step-tip);
       }
 
       :host-context(google-codelab:not([theme="minimal"])) .instructions ::content aside.warning {
         border-color: #EA8600;
         background: #FEF7E0;
-        color: #3C4043;
+        color: var(--google-material-grey-900);
         @apply(--google-codelab-step-warn);
       }
 
@@ -138,16 +138,16 @@ the License.
         background-color: #E8F0FE;
         margin: 20px 0;
         padding: 15px;
-        border-left: 3px solid #185ABC;
+        border-left: 3px solid var(--google-material-blue-800);
         border-radius: 4px;
-        color: #3C4043;
+        color: var(--google-material-grey-900);
         font-size: 14px;
         line-height: 1.5;
         @apply(--google-codelab-step-callout);
       }
 
       .instructions ::content aside.callout b {
-        color: #185ABC;
+        color: var(--google-material-blue-800);
       }
 
       .instructions ::content ul.checklist {
@@ -195,12 +195,12 @@ the License.
       }
 
       .instructions ::content paper-button.colored {
-        background-color: #1E8E3E;
+        background-color: var(--google-material-green-600);
       }
 
 
       .instructions ::content paper-button.red {
-        background-color: #EA4335;
+        background-color: #D93025;
       }
 
       .instructions ::content iron-icon {

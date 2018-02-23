@@ -139,24 +139,21 @@ prevent syntax highlighting code blocks, respectively:
 
           <footer id="controls" hidden$="[[noArrows]]" narrow$="[[_narrow]]">
             <div class="fabs layout horizontal justified">
-              <paper-fab raised class="navbutton prevbutton" icon="chevron-left"
+              <paper-button raised class="navbutton prevbutton"
                 on-tap="selectPrevious"
                 title="Previous step"
-                disabled$="{{_isFirstStep(selected)}}">
-              </paper-fab>
+                disabled$="{{_isFirstStep(selected)}}">Back</paper-button>
 
               <div>
                 <template is="dom-if" if="{{_showNextFab(selected, steps)}}" strip-whitespace>
-                  <paper-fab icon="chevron-right" raised class="navbutton nextbutton"
+                  <paper-button raised class="navbutton nextbutton"
                     title="{{_nextFabTitle(selected)}}"
-                    on-tap="selectNext">
-                  </paper-fab>
+                    on-tap="selectNext">Next</paper-button>
                 </template>
 
                 <template is="dom-if" if="{{_showDoneFab(selected, steps)}}" strip-whitespace>
-                  <paper-fab icon="done" raised class="navbutton donebutton"
-                    on-tap="_goToHome" title="Complete codelab">
-                  </paper-fab>
+                  <paper-button raised class="navbutton donebutton"
+                    on-tap="_goToHome" title="Complete codelab">Done</paper-button>
                 </template>
               </div>
             </div>

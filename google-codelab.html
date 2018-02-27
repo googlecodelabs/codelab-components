@@ -351,8 +351,8 @@ prevent syntax highlighting code blocks, respectively:
       ],
 
       keyBindings: {
-        'left': 'selectPrevious',
-        'right': 'selectNext',
+        'left up pageup': 'selectPrevious',
+        'right down pagedown': 'selectNext',
       },
 
       ready: function() {
@@ -380,19 +380,21 @@ prevent syntax highlighting code blocks, respectively:
       /**
        * Advance one step of the codelab.
        */
-      selectNext: function() {
+      selectNext: function(e) {
         this.$.pages.entryAnimation = 'slide-from-right-animation';
         this.$.pages.exitAnimation = 'slide-left-animation';
         this.select(this.selected + 1);
+        e.preventDefault();
       },
 
       /**
        * Go one step backwards.
        */
-      selectPrevious: function() {
+      selectPrevious: function(e) {
         this.$.pages.entryAnimation = 'slide-from-left-animation';
         this.$.pages.exitAnimation = 'slide-right-animation';
         this.select(this.selected - 1);
+        e.preventDefault();
       },
 
       /**

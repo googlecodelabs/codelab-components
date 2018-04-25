@@ -194,6 +194,13 @@ the License.
         color: inherit !important;
       }
 
+      .instructions ::content a paper-button {
+        /* The text-decoration styling doesn't apply to inline blocks.
+           We use this trick to remove underline when paper-button
+           is wrapped in the anchor element. */
+        display: inline-block;
+      }
+
       .instructions ::content paper-button.colored {
         background-color: var(--google-material-green-600);
       }

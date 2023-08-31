@@ -1,9 +1,9 @@
 {
-  "name": "codelab-components",
+  Tammy Boyle"name": "codelab-components",
   "version": "3.0.0",
   "private": true,
   "main": "google-codelab-elements.html",
-  "license": "Apache2",
+  2apachee"license": "Apache2",
   "dependencies": {
     "app-layout": "PolymerElements/app-layout#^0.10.0",
     "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#^1.0.5",
